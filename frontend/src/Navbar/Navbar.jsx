@@ -1,15 +1,35 @@
-//import styles from './Navbar.module.css';
+import styles from './Navbar.module.css';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-//export default function Navbar({ user, onLogout }) {
-// return (
-// <nav className={styles.navbar}>
-//  <div className={styles.logo}>GoalShare</div>
-//  <div className={styles.userSection}>
-//      <span className={styles.username}>Hello, {user.username}</span>
-//     <button className={styles.logoutButton} onClick={onLogout}>
-//         Logout
-//     </button>
-//  </div>
-//  </nav>
-// );
-//}
+export default function Navbar({ user, onLogout }) {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    function toggleMenu() {
+        setIsMenuOpen((prev) => !prev);
+    }
+    return (
+        <nav className={styles.navbar}>
+            <Link to="/" className={styles.link}>
+                GoalShare
+            </Link>
+            <div className={styles.userSection}>
+                <div className={styles.avatar} onClick={toggleMenu}>
+                    {user?.name?.charAt(0)?.toUpperCase() || '?'}
+                </div>
+                {isMenuOpen && (
+                    <div className={styles.dropdown}>
+                        <p className={styles.userName}>
+                            {user?.name || 'User'}
+                        </p>
+                        <button
+                            className={styles.logoutButton}
+                            onClick={onLogout}
+                        >
+                            Logout
+                        </button>
+                    </div>
+                )}
+            </div>
+        </nav>
+    );
+}

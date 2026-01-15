@@ -1,0 +1,63 @@
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 100%;
+    max-width: 600px;
+    padding: 60px 40px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    text-align: center;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+    margin: 0 0 20px 0;
+    font-size: 36px;
+    color: #333;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.loginLink,
+.signupLink {
+    display: inline-block;
+    margin: 0 8px;
+    padding: 0 4px;
+    text-decoration: none;
+    color: #4a90e2;
+    font-weight: 700;
+    transition: color 0.2s ease;
+}
+
+.loginLink:hover,
+.signupLink:hover {
+    color: #357abd;
+    text-decoration: underline;
+}
+.createGroupButton {
+    margin-top: 30px;
+    padding: 14px 28px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.createGroupButton:hover {
+    background-color: #357abd;
+}

@@ -25,6 +25,7 @@ app.use(
     })
 );
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/Group', require('./routes/groupRoutes'));
 
 app.use((err, req, res, next) => {
     console.error('Error:', err.message);
