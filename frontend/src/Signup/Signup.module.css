@@ -1,0 +1,121 @@
+body {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 25rem;
+    margin: 80px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    font-weight: 600;
+}
+
+.container input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+.container input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.container button {
+    width: 100%;
+    padding: 14px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.container button:hover {
+    background-color: #357abd;
+}
+
+.container button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.error {
+    color: #e74c3c;
+    background-color: #fceae9;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #f5c2c1;
+}
+
+.loginLink {
+    text-align: center;
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.loginLink:hover {
+    color: #4a90e2;
+    text-decoration: underline;
+}
+.loading {
+    color: #38bdf8;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+@media (max-width: 640px) {
+    .container {
+        width: 20rem;
+    }
+}
+@media (max-width: 400px) {
+    .container {
+        width: 15rem;
+    }
+}

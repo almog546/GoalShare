@@ -1,0 +1,159 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String        @id @default(cuid())
+  email     String        @unique
+  name      String
+  password  String
+  createdAt DateTime      @default(now())
+
+  memberships GroupMember[]
+  contributions Contribution[]
+  billPayments  BillPayment[]
+}
+
+
+model Group {
+  id        String         @id @default(cuid())
+  name      String
+  type      GroupType
+  createdAt DateTime       @default(now())
+
+  members       GroupMember[]
+  goals         Goal[]
+  bills         RecurringBill[]
+  inviteLinks   InviteLink[]
+  activityLogs  ActivityLog[]
+}
+
+
+model GroupMember {
+  id      String     @id @default(cuid())
+  userId  String
+  groupId String
+  role    GroupRole
+
+  user    User       @relation(fields: [userId], references: [id])
+  group   Group      @relation(fields: [groupId], references: [id])
+
+  @@unique([userId, groupId])
+}
+
+
+model InviteLink {
+  id        String     @id @default(cuid())
+  token     String     @unique
+  groupId   String
+  role      GroupRole
+  isActive  Boolean    @default(true)
+  createdAt DateTime   @default(now())
+
+  group     Group      @relation(fields: [groupId], references: [id])
+}
+
+model Goal {
+  id          String        @id @default(cuid())
+  name        String
+  target      Float
+  deadline    DateTime?
+  monthlyHint Float?
+  createdAt   DateTime      @default(now())
+
+  groupId     String
+  group       Group         @relation(fields: [groupId], references: [id])
+
+  contributions Contribution[]
+}
+
+model Contribution {
+  id        String   @id @default(cuid())
+  amount    Float
+  date      DateTime @default(now())
+  note      String?
+
+  goalId    String
+  userId    String
+
+  goal      Goal     @relation(fields: [goalId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model RecurringBill {
+  id        String        @id @default(cuid())
+  name      String
+  amount    Float
+  frequency BillFrequency
+  dueDay    Int
+  createdAt DateTime      @default(now())
+
+  groupId   String
+  group     Group         @relation(fields: [groupId], references: [id])
+
+  payments  BillPayment[]
+}
+
+
+
+model BillPayment {
+  id        String   @id @default(cuid())
+  date      DateTime @default(now())
+
+  billId    String
+  userId    String
+
+  bill      RecurringBill @relation(fields: [billId], references: [id])
+  user      User          @relation(fields: [userId], references: [id])
+}
+
+model ActivityLog {
+  id        String        @id @default(cuid())
+  type      ActivityType
+  message   String
+  createdAt DateTime      @default(now())
+
+  groupId   String
+  group     Group         @relation(fields: [groupId], references: [id])
+}
+
+enum GroupRole {
+  OWNER
+  CONTRIBUTOR
+  VIEWER
+}
+
+enum GroupType {
+  COUPLE
+  FAMILY
+  ROOMMATES
+  OTHER
+}
+
+enum BillFrequency {
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+enum ActivityType {
+  GROUP_CREATED
+  MEMBER_JOINED
+  GOAL_CREATED
+  CONTRIBUTION_ADDED
+  BILL_ADDED
+  BILL_PAID
+}
+
