@@ -46,7 +46,7 @@ model GroupMember {
   id      String     @id @default(cuid())
   userId  String
   groupId String
-  role    GroupRole
+  role    GroupRole @default(CONTRIBUTOR)
 
   user    User       @relation(fields: [userId], references: [id])
   group   Group      @relation(fields: [groupId], references: [id])

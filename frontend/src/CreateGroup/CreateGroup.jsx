@@ -2,7 +2,7 @@ import styles from './CreateGroup.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function CreateGroup({ user }) {
+export default function CreateGroup() {
     const navigate = useNavigate();
     const [groupName, setGroupName] = useState('');
     const [grouptype, setGroupType] = useState('COUPLE');
@@ -63,6 +63,8 @@ export default function CreateGroup({ user }) {
                 >
                     Create Group
                 </button>
+                {loading && <p className={styles.loading}>Creating group...</p>}
+                {error && <p className={styles.error}>{error}</p>}
                 <p className={styles.allAmounts}>
                     All amounts are displayed in USD ($)
                 </p>

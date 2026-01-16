@@ -1,7 +1,39 @@
 import styles from './Home.module.css';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 export default function Home({ user }) {
+    const [groups, setGroups] = useState([]);
+    const GroupType = {
+        COUPLE: 'couple',
+        FAMILY: 'family',
+        ROOMMATES: 'roommates',
+        OTHER: 'other',
+    };
+
+    useEffect(() => {
+        async function fetchGroups() {
+            try {
+                const res = await fetch(
+                    `${import.meta.env.VITE_API_URL}/api/Group/user-groups`,
+                    {
+                        method: 'GET',
+                        credentials: 'include',
+                    }
+                );
+                if (!res.ok) {
+                    console.error('Failed to fetch groups');
+                } else {
+                    const data = await res.json();
+                    setGroups(data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch groups', error);
+            }
+        }
+        fetchGroups();
+    }, []);
+
     return (
         <>
             {user ? (
@@ -15,6 +47,23 @@ export default function Home({ user }) {
                     >
                         Create a Group
                     </button>
+                    <h2 className={styles.subtitle}>Your Groups:</h2>
+                    {groups.length === 0 ? (
+                        <p>You are not part of any groups yet.</p>
+                    ) : (
+                        <ul className={styles.groupList}>
+                            {groups.map((group) => (
+                                <div
+                                    key={group.id}
+                                    className={styles.groupItem}
+                                >
+                                    <h3>{group.name}</h3>
+
+                                    <p>Type: {GroupType[group.type]}</p>
+                                </div>
+                            ))}
+                        </ul>
+                    )}
                 </div>
             ) : (
                 <div className={styles.container}>

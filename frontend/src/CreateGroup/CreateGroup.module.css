@@ -66,6 +66,19 @@
     overflow-y: auto;
     text-align: center;
 }
+.error {
+    color: #e74c3c;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
+.loading {
+    color: #4a90e2;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
+
 @media (max-width: 350px) {
     .container {
         width: 16rem;

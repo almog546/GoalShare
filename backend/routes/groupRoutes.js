@@ -11,5 +11,6 @@ const {
 const requireAuth = require('../middlewares/requireAuth');
 
 router.post('/create', requireAuth, createGroup);
+router.get('/user-groups', requireAuth, getGroups);
 
 module.exports = router;
