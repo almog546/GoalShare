@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react';
 
 export default function Home({ user }) {
     const [groups, setGroups] = useState([]);
+
     const GroupType = {
-        COUPLE: 'couple',
-        FAMILY: 'family',
-        ROOMMATES: 'roommates',
-        OTHER: 'other',
+        COUPLE: 'Couple',
+        FAMILY: 'Family',
+        ROOMMATES: 'Roommates',
+        OTHER: 'Other',
     };
 
     useEffect(() => {
@@ -39,7 +40,7 @@ export default function Home({ user }) {
             {user ? (
                 <div className={styles.container}>
                     <h1 className={styles.title}>
-                        Welcome,{user.name} let’s build something together!
+                        Welcome {user.name} let’s build something together!
                     </h1>
                     <button
                         className={styles.createGroupButton}
@@ -49,7 +50,9 @@ export default function Home({ user }) {
                     </button>
                     <h2 className={styles.subtitle}>Your Groups:</h2>
                     {groups.length === 0 ? (
-                        <p>You are not part of any groups yet.</p>
+                        <p className={styles.noGroupsText}>
+                            You are not part of any groups yet.
+                        </p>
                     ) : (
                         <ul className={styles.groupList}>
                             {groups.map((group) => (
@@ -60,6 +63,12 @@ export default function Home({ user }) {
                                     <h3>{group.name}</h3>
 
                                     <p>Type: {GroupType[group.type]}</p>
+                                    <Link
+                                        to={`/group/${group.id}`}
+                                        className={styles.viewGroupLink}
+                                    >
+                                        View Group
+                                    </Link>
                                 </div>
                             ))}
                         </ul>

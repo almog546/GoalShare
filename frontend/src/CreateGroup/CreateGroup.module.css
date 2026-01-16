@@ -1,4 +1,9 @@
 .container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     width: 22rem;
     padding: 40px;
     background-color: #ffffff;
@@ -27,12 +32,10 @@
     border-radius: 8px;
     font-size: 16px;
     box-sizing: border-box;
-    cursor: text;
 }
 
 .container select {
     cursor: pointer;
-
     background-color: #f0f4f9;
 }
 
@@ -58,29 +61,23 @@
     outline: none;
     border-color: #4a90e2;
 }
-.allAmounts {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 150px;
-    overflow-y: auto;
-    text-align: center;
-}
+
 .error {
     color: #e74c3c;
     font-size: 14px;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 5px;
 }
+
 .loading {
     color: #4a90e2;
     font-size: 14px;
     text-align: center;
-    margin-top: 10px;
 }
 
-@media (max-width: 350px) {
+@media (max-width: 400px) {
     .container {
-        width: 16rem;
+        width: 90%;
+        padding: 25px;
     }
 }

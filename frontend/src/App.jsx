@@ -8,6 +8,7 @@ import Navbar from './Navbar/Navbar.jsx';
 import { useNavigate } from 'react-router-dom';
 import CreateGroup from './CreateGroup/CreateGroup.jsx';
 import GroupDashboard from './GroupDashboard/GroupDashboard.jsx';
+import GroupPage from './GroupPage/GroupPage.jsx';
 
 function App() {
     const nabvigate = useNavigate();
@@ -70,6 +71,8 @@ function App() {
                     path="/group-dashboard"
                     element={<GroupDashboard user={user} />}
                 />
+
+                <Route path="/group/:id" element={<GroupPage />} />
             </Routes>
         </>
     );

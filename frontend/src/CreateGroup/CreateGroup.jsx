@@ -4,33 +4,39 @@ import { useNavigate } from 'react-router-dom';
 
 export default function CreateGroup() {
     const navigate = useNavigate();
+
     const [groupName, setGroupName] = useState('');
-    const [grouptype, setGroupType] = useState('COUPLE');
+    const [groupType, setGroupType] = useState('COUPLE');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    async function handleSubmit(event) {
-        event.preventDefault();
+    async function handleSubmit(e) {
+        e.preventDefault();
         setLoading(true);
         setError(null);
+
         try {
-            const response = await fetch(
+            const res = await fetch(
                 `${import.meta.env.VITE_API_URL}/api/Group/create`,
                 {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
-                    body: JSON.stringify({ name: groupName, type: grouptype }),
+                    body: JSON.stringify({
+                        name: groupName,
+                        type: groupType,
+                    }),
                 }
             );
-            const data = await response.json();
-            if (response.ok) {
-                navigate('/group-dashboard');
-            } else {
+
+            const data = await res.json();
+
+            if (!res.ok) {
                 setError(data.message || 'Group creation failed');
+                return;
             }
+
+            navigate(`/`);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -39,36 +45,33 @@ export default function CreateGroup() {
     }
 
     return (
-        <>
-            <form className={styles.container}>
-                <h1>Create a Group</h1>
-                <input
-                    type="text"
-                    placeholder="Group Name"
-                    value={groupName}
-                    onChange={(e) => setGroupName(e.target.value)}
-                />
-                <select
-                    value={grouptype}
-                    onChange={(e) => setGroupType(e.target.value)}
-                >
-                    <option value="COUPLE">Couple</option>
-                    <option value="FAMILY">Family</option>
-                    <option value="ROOMMATES">Roommates</option>
-                    <option value="OTHER">Other</option>
-                </select>
-                <button
-                    onClick={handleSubmit}
-                    className={styles.createGroupButton}
-                >
-                    Create Group
-                </button>
-                {loading && <p className={styles.loading}>Creating group...</p>}
-                {error && <p className={styles.error}>{error}</p>}
-                <p className={styles.allAmounts}>
-                    All amounts are displayed in USD ($)
-                </p>
-            </form>
-        </>
+        <form className={styles.container} onSubmit={handleSubmit}>
+            <h1>Create a Group</h1>
+
+            <input
+                type="text"
+                placeholder="Group Name"
+                value={groupName}
+                onChange={(e) => setGroupName(e.target.value)}
+                required
+            />
+
+            <select
+                value={groupType}
+                onChange={(e) => setGroupType(e.target.value)}
+            >
+                <option value="COUPLE">Couple</option>
+                <option value="FAMILY">Family</option>
+                <option value="ROOMMATES">Roommates</option>
+                <option value="OTHER">Other</option>
+            </select>
+
+            <button disabled={loading} className={styles.createGroupButton}>
+                Create Group
+            </button>
+
+            {loading && <p className={styles.loading}>Creating group...</p>}
+            {error && <p className={styles.error}>{error}</p>}
+        </form>
     );
 }
