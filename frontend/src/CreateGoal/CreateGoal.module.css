@@ -1,0 +1,85 @@
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 100%;
+    max-width: 400px;
+    padding: 2.5rem;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.container h2 {
+    text-align: center;
+    margin: 0 0 0.5rem 0;
+    color: #1a1a2e;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.container label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.container input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #f0f4f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #1a202c;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.container input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.container button[type='submit'] {
+    width: 100%;
+    padding: 14px;
+    margin-top: 1rem;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+}
+
+.container button[type='submit']:hover {
+    background-color: #357abd;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(74, 144, 226, 0.3);
+}
+
+.container button[type='submit']:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+        padding: 1.5rem;
+    }
+}

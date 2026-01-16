@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const prisma = require('../prismaClient');
 
-async function signup(req, res, next) {
+async function signup(req, res) {
     try {
         const { email, name, password } = req.body;
         if (!email || !name || !password) {
@@ -25,7 +25,7 @@ async function signup(req, res, next) {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-async function login(req, res, next) {
+async function login(req, res) {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -42,16 +42,18 @@ async function login(req, res, next) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
         req.session.userId = user.id;
-        res.status(200).json({
-            message: 'Login successful',
-            userId: user.id,
+        req.session.save(() => {
+            res.status(200).json({
+                message: 'Login successful',
+                userId: user.id,
+            });
         });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-async function me(req, res, next) {
+async function me(req, res) {
     try {
         const userId = req.session.userId;
         if (!userId) {

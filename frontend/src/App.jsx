@@ -9,12 +9,16 @@ import { useNavigate } from 'react-router-dom';
 import CreateGroup from './CreateGroup/CreateGroup.jsx';
 import GroupDashboard from './GroupDashboard/GroupDashboard.jsx';
 import GroupPage from './GroupPage/GroupPage.jsx';
+import CreateGoal from './CreateGoal/CreateGoal.jsx';
 
 function App() {
     const nabvigate = useNavigate();
     const [user, setUser] = useState(null);
     const [logout, setLogout] = useState(false);
     const location = useLocation();
+    const [goals, setGoals] = useState([]);
+    const [bills, setBills] = useState([]);
+
     async function onLogout() {
         try {
             const res = await fetch(
@@ -72,7 +76,21 @@ function App() {
                     element={<GroupDashboard user={user} />}
                 />
 
-                <Route path="/group/:id" element={<GroupPage />} />
+                <Route
+                    path="/group/:id"
+                    element={<GroupPage goals={goals} bills={bills} />}
+                />
+                <Route
+                    path="/create-goal"
+                    element={
+                        <CreateGoal
+                            goals={goals}
+                            setGoals={setGoals}
+                            bills={bills}
+                            setBills={setBills}
+                        />
+                    }
+                />
             </Routes>
         </>
     );

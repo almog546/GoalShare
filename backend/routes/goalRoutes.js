@@ -8,10 +8,10 @@ const requireAuth = require('../middlewares/requireAuth');
 const {
     requireGroupMember,
     requireRole,
-} = require('../middlewares/requireGroupMember');
+} = require('../middlewares/requireAuthInGroupe');
 
 router.post(
-    '/create',
+    '/create/:groupId',
     requireAuth,
     requireGroupMember,
     requireRole,

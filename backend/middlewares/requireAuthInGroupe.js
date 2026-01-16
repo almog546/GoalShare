@@ -1,9 +1,15 @@
+const prisma = require('../prismaClient');
+
 async function requireGroupMember(req, res, next) {
     const userId = req.session.userId;
     const groupId = req.body.groupId || req.params.groupId;
 
-    if (!userId || !groupId) {
+    if (!userId) {
         return res.status(401).json({ message: 'Not authenticated' });
+    }
+
+    if (!groupId) {
+        return res.status(400).json({ message: 'groupId is required' });
     }
 
     const membership = await prisma.groupMember.findFirst({
