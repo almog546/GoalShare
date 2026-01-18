@@ -3,18 +3,18 @@ import styles from './GroupPage.module.css';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export default function GroupPage({ goals, bills }) {
+export default function GroupPage({ goals, bills, setGoals, setBills }) {
     const navigate = useNavigate();
     const [groupdetails, setGroupDetails] = useState(null);
 
-    const { id } = useParams();
+    const { groupid } = useParams();
 
     useEffect(() => {
         async function fetchGroupDetails() {
             try {
                 const res = await fetch(
-                    `${import.meta.env.VITE_API_URL}/api/Group/${id}`,
-                    { method: 'GET', credentials: 'include' }
+                    `${import.meta.env.VITE_API_URL}/api/Group/${groupid}`,
+                    { method: 'GET', credentials: 'include' },
                 );
                 if (!res.ok) {
                     console.error('Failed to fetch group details');
@@ -27,16 +27,36 @@ export default function GroupPage({ goals, bills }) {
             }
         }
         fetchGroupDetails();
-    }, [id]);
+    }, [groupid]);
+    useEffect(() => {
+        async function fetchGoals() {
+            try {
+                const res = await fetch(
+                    `${import.meta.env.VITE_API_URL}/api/Goal/group/${groupid}`,
+                    { method: 'GET', credentials: 'include' },
+                );
+                if (!res.ok) {
+                    console.error('Failed to fetch goals');
+                } else {
+                    const data = await res.json();
+                    setGoals(data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch goals', error);
+            }
+        }
+        fetchGoals();
+    }, [groupid]);
 
     return (
         <>
-            {goals.length === 0 && bills.length === 0 ? (
-                <div className={styles.container}>
-                    <h2>No goals or bills found for this group.</h2>
+            <div className={styles.container}>
+                <div className={styles.buttonsWrapper}>
                     <button
                         className={styles.createGoalButton}
-                        onClick={() => navigate('/create-goal')}
+                        onClick={() =>
+                            navigate(`/group/${groupid}/create-goal`)
+                        }
                     >
                         Create Goal
                     </button>
@@ -44,9 +64,16 @@ export default function GroupPage({ goals, bills }) {
                         Create Bill
                     </button>
                 </div>
-            ) : (
-                <h1 className={styles.good}>good</h1>
-            )}{' '}
+
+                {goals.map((goal) => (
+                    <div key={goal.id} className={styles.goalCard}>
+                        <h3 className={styles.goalName}>{goal.name}</h3>
+                        <p className={styles.goalTarget}>
+                            Target: ${goal.target}
+                        </p>
+                    </div>
+                ))}
+            </div>
         </>
     );
 }

@@ -26,7 +26,7 @@ function App() {
                 {
                     method: 'POST',
                     credentials: 'include',
-                }
+                },
             );
             if (res.ok) {
                 setUser(null);
@@ -45,7 +45,7 @@ function App() {
                     {
                         method: 'GET',
                         credentials: 'include',
-                    }
+                    },
                 );
                 if (res.ok) {
                     const data = await res.json();
@@ -77,11 +77,18 @@ function App() {
                 />
 
                 <Route
-                    path="/group/:id"
-                    element={<GroupPage goals={goals} bills={bills} />}
+                    path="/group/:groupid"
+                    element={
+                        <GroupPage
+                            goals={goals}
+                            bills={bills}
+                            setGoals={setGoals}
+                            setBills={setBills}
+                        />
+                    }
                 />
                 <Route
-                    path="/create-goal"
+                    path="/group/:groupid/create-goal"
                     element={
                         <CreateGoal
                             goals={goals}

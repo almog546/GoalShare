@@ -8,14 +8,14 @@ export default function CreateGoal({ goals, setGoals, bills, setBills }) {
     const [target, setTarget] = useState('');
     const [deadline, setDeadline] = useState('');
     const [monthlyHint, setMonthlyHint] = useState('');
-    const { id } = useParams();
+    const { groupid } = useParams();
     const navigate = useNavigate();
 
     async function handleCreateGoal(e) {
         e.preventDefault();
         try {
             const res = await fetch(
-                `${import.meta.env.VITE_API_URL}/api/Goal/create/${id}`,
+                `${import.meta.env.VITE_API_URL}/api/Goal/create/${groupid}`,
                 {
                     method: 'POST',
                     headers: {
@@ -26,15 +26,14 @@ export default function CreateGoal({ goals, setGoals, bills, setBills }) {
                         name,
                         target: Number(target),
                         deadline,
-                        monthlyHint,
-                        groupId: id,
+                        monthlyHint: monthlyHint ? Number(monthlyHint) : null,
                     }),
-                }
+                },
             );
             if (res.ok) {
                 const newGoal = await res.json();
                 setGoals((prevGoals) => [...prevGoals, newGoal]);
-                navigate(`/`);
+                navigate(`/group/${groupid}`);
             } else {
                 console.error('Failed to create goal');
             }
@@ -45,7 +44,10 @@ export default function CreateGoal({ goals, setGoals, bills, setBills }) {
 
     return (
         <>
-            <form className={styles.container} onSubmit={handleCreateGoal}>
+            <form
+                className={styles.container}
+                onSubmit={(e) => handleCreateGoal(e)}
+            >
                 <h2>Create New Goal</h2>
                 <label>
                     Goal Name:
@@ -60,7 +62,7 @@ export default function CreateGoal({ goals, setGoals, bills, setBills }) {
                     <input
                         type="number"
                         value={target}
-                        onChange={(e) => setTarget(Number(e.target.value))}
+                        onChange={(e) => setTarget(e.target.value)}
                     />
                 </label>
                 <label>

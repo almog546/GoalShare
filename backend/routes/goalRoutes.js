@@ -15,7 +15,13 @@ router.post(
     requireAuth,
     requireGroupMember,
     requireRole,
-    createGoal
+    createGoal,
+);
+router.get(
+    '/group/:groupId',
+    requireAuth,
+    requireGroupMember,
+    getGoalsByGroupId,
 );
 
 module.exports = router;
