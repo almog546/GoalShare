@@ -9,6 +9,7 @@ async function createGoal(req, res) {
                 target,
                 deadline: new Date(deadline),
                 monthlyHint,
+                current: 0,
                 groupId: req.params.groupId,
                 contributions: {
                     create: {
@@ -41,8 +42,65 @@ async function getGoalsByGroupId(req, res) {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
+async function getGoalById(req, res) {
+    const userId = req.session.userId;
+    const { goalId } = req.params;
+
+    try {
+        const goal = await prisma.goal.findFirst({
+            where: {
+                id: goalId,
+                group: {
+                    members: {
+                        some: {
+                            userId,
+                        },
+                    },
+                },
+            },
+        });
+
+        if (!goal) {
+            return res.status(404).json({ message: 'Goal not found' });
+        }
+
+        res.status(200).json(goal);
+    } catch (error) {
+        console.error('Error fetching goal:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+async function deleteGoal(req, res) {
+    const { goalId } = req.params;
+    const userId = req.session.userId;
+    try {
+        const goal = await prisma.goal.findFirst({
+            where: {
+                id: goalId,
+                group: {
+                    members: {
+                        some: {
+                            userId,
+                        },
+                    },
+                },
+            },
+        });
+        if (!goal) {
+            return res.status(404).json({ message: 'Goal not found' });
+        }
+        await prisma.goal.delete({
+            where: { id: goalId },
+        });
+        res.status(200).json({ message: 'Goal deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
 
 module.exports = {
     createGoal,
     getGoalsByGroupId,
+    getGoalById,
+    deleteGoal,
 };

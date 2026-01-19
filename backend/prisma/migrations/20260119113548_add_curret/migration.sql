@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Goal" ADD COLUMN     "current" DOUBLE PRECISION NOT NULL DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "GroupMember" ALTER COLUMN "role" SET DEFAULT 'CONTRIBUTOR';

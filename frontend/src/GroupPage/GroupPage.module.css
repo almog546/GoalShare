@@ -63,6 +63,7 @@
     transition: all 0.2s ease;
     max-width: 420px;
     text-align: center;
+    cursor: pointer;
 }
 
 .goalCard:hover {
@@ -83,7 +84,12 @@
     font-weight: 600;
     color: #4a5568;
 }
-
+.noGoalsText {
+    text-align: center;
+    color: #718096;
+    font-size: 1rem;
+    margin-top: 2rem;
+}
 @media (max-width: 768px) {
     .container {
         padding: 1.5rem 1rem;

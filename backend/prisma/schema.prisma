@@ -70,6 +70,7 @@ model Goal {
   id          String        @id @default(cuid())
   name        String
   target      Float
+  current     Float        @default(0)
   deadline    DateTime?
   monthlyHint Float?
   createdAt   DateTime      @default(now())
@@ -89,7 +90,7 @@ model Contribution {
   goalId    String
   userId    String
 
-  goal      Goal     @relation(fields: [goalId], references: [id])
+  goal      Goal     @relation(fields: [goalId], references: [id],onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id])
 }
 

@@ -3,9 +3,10 @@ import styles from './GroupPage.module.css';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export default function GroupPage({ goals, bills, setGoals, setBills }) {
+export default function GroupPage({}) {
     const navigate = useNavigate();
     const [groupdetails, setGroupDetails] = useState(null);
+    const [goals, setGoals] = useState([]);
 
     const { groupid } = useParams();
 
@@ -64,9 +65,18 @@ export default function GroupPage({ goals, bills, setGoals, setBills }) {
                         Create Bill
                     </button>
                 </div>
+                {goals.length === 0 && (
+                    <p className={styles.noGoalsText}>No goals created yet.</p>
+                )}
 
                 {goals.map((goal) => (
-                    <div key={goal.id} className={styles.goalCard}>
+                    <div
+                        key={goal.id}
+                        className={styles.goalCard}
+                        onClick={() =>
+                            navigate(`/group/${groupid}/goal/${goal.id}`)
+                        }
+                    >
                         <h3 className={styles.goalName}>{goal.name}</h3>
                         <p className={styles.goalTarget}>
                             Target: ${goal.target}

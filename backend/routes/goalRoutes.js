@@ -3,6 +3,8 @@ const router = express.Router();
 const {
     createGoal,
     getGoalsByGroupId,
+    getGoalById,
+    deleteGoal,
 } = require('../controllers/goalController');
 const requireAuth = require('../middlewares/requireAuth');
 const {
@@ -22,6 +24,19 @@ router.get(
     requireAuth,
     requireGroupMember,
     getGoalsByGroupId,
+);
+router.get(
+    '/group/:groupId/goal/:goalId',
+    requireAuth,
+    requireGroupMember,
+    getGoalById,
+);
+router.delete(
+    '/group/:groupId/goal/:goalId',
+    requireAuth,
+    requireGroupMember,
+    requireRole,
+    deleteGoal,
 );
 
 module.exports = router;

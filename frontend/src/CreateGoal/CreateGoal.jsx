@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export default function CreateGoal({ goals, setGoals, bills, setBills }) {
+export default function CreateGoal() {
     const [name, setName] = useState('');
     const [target, setTarget] = useState('');
     const [deadline, setDeadline] = useState('');
     const [monthlyHint, setMonthlyHint] = useState('');
     const { groupid } = useParams();
+    const [goals, setGoals] = useState([]);
     const navigate = useNavigate();
 
     async function handleCreateGoal(e) {
