@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function GoalPage() {
     const { groupId } = useParams();
     const { goalId } = useParams();
+    const { ContributionId } = useParams();
     const [goals, setGoals] = useState('');
     const navigate = useNavigate();
 
@@ -55,15 +56,21 @@ export default function GoalPage() {
             <div className={styles.container}>
                 <h1> {goals.name}</h1>
                 <ProgressBar current={goals.current} target={goals.target} />
-
+                <p>Current amount: {goals.current}</p>
                 <p>
-                    {' '}
                     Deadline:{' '}
                     {new Date(goals.deadline).toLocaleDateString()}{' '}
                 </p>
                 <p> Suggested Hint: ${goals.monthlyHint} </p>
                 <div className={styles.buttonsWrapper}>
-                    <button className={styles.addContributionButton}>
+                    <button
+                        className={styles.addContributionButton}
+                        onClick={() =>
+                            navigate(
+                                `/group/${groupId}/goal/${goalId}/AddContribution/`,
+                            )
+                        }
+                    >
                         Add contribution
                     </button>
 

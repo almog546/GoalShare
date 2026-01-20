@@ -9,7 +9,7 @@ app.use(
     cors({
         origin: true,
         credentials: true,
-    })
+    }),
 );
 app.use(
     session({
@@ -22,11 +22,13 @@ app.use(
             sameSite: 'lax',
             secure: false,
         },
-    })
+    }),
 );
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/Group', require('./routes/groupRoutes'));
 app.use('/api/Goal', require('./routes/goalRoutes'));
+app.use('/api/Contribution', require('./routes/ContributionRoutes'));
+app.use('/api/Bill', require('./routes/billRoutes'));
 
 app.use((err, req, res, next) => {
     console.error('Error:', err.message);

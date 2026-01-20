@@ -11,7 +11,8 @@ import GroupDashboard from './GroupDashboard/GroupDashboard.jsx';
 import GroupPage from './GroupPage/GroupPage.jsx';
 import CreateGoal from './CreateGoal/CreateGoal.jsx';
 import GoalPage from './GoalPage/GoalPage.jsx';
-
+import AddContribution from './AddContribution/AddContribution.jsx';
+import CreateBill from './CreateBill/CreateBill.jsx';
 function App() {
     const nabvigate = useNavigate();
     const [user, setUser] = useState(null);
@@ -75,7 +76,6 @@ function App() {
                     path="/group-dashboard"
                     element={<GroupDashboard user={user} />}
                 />
-
                 <Route path="/group/:groupid" element={<GroupPage />} />
                 <Route
                     path="/group/:groupid/create-goal"
@@ -84,6 +84,14 @@ function App() {
                 <Route
                     path="/group/:groupId/goal/:goalId"
                     element={<GoalPage />}
+                />
+                <Route
+                    path="/group/:groupId/goal/:goalId/AddContribution/"
+                    element={<AddContribution />}
+                />
+                <Route
+                    path="/group/:groupId/CreateBill/"
+                    element={<CreateBill />}
                 />
             </Routes>
         </>

@@ -3,7 +3,7 @@ import styles from './GroupPage.module.css';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export default function GroupPage({}) {
+export default function GroupPage() {
     const navigate = useNavigate();
     const [groupdetails, setGroupDetails] = useState(null);
     const [goals, setGoals] = useState([]);
@@ -61,7 +61,10 @@ export default function GroupPage({}) {
                     >
                         Create Goal
                     </button>
-                    <button className={styles.createBillButton}>
+                    <button
+                        className={styles.createBillButton}
+                        onClick={() => navigate(`/group/${groupid}/CreateBill`)}
+                    >
                         Create Bill
                     </button>
                 </div>
