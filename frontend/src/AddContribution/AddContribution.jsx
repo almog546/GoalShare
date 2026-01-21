@@ -70,8 +70,8 @@ export default function AddContribution() {
                     onChange={(e) => setdate(e.target.value)}
                     required
                 />
-                <button className={styles.createGroupButton}>
-                    Create Group
+                <button className={styles.contributionGroupButton}>
+                    Add contribution
                 </button>
             </form>
         </>

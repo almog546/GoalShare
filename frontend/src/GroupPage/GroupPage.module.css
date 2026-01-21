@@ -1,101 +1,135 @@
 .container {
-    min-height: 100vh;
-    padding: 2.5rem 2rem;
-    background-color: #f5f7fb;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
     font-family:
         system-ui,
         -apple-system,
         sans-serif;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    margin-top: 4rem;
+    align-items: center;
+    margin-top: 5rem;
 }
 
 .buttonsWrapper {
     display: flex;
-    gap: 1rem;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.createGoalButton,
+.createBillButton {
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
 }
 
 .createGoalButton {
-    padding: 12px 20px;
     background-color: #4a90e2;
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.25);
+    color: white;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+}
+
+.createBillButton {
+    background-color: white;
+    color: #4a90e2;
+    border: 2px solid #4a90e2;
 }
 
 .createGoalButton:hover {
     background-color: #357abd;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(74, 144, 226, 0.35);
+    transform: translateY(-2px);
 }
-
-.createBillButton {
-    padding: 12px 20px;
-    background-color: #ffffff;
-    color: #4a5568;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
 .createBillButton:hover {
-    background-color: #f0f4f9;
-    border-color: #cbd5e0;
+    background-color: #f0f7ff;
+    transform: translateY(-2px);
 }
 
-.goalCard {
-    background-color: #ffffff;
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    transition: all 0.2s ease;
-    max-width: 420px;
-    text-align: center;
-    cursor: pointer;
+.goalsbills {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e2e8f0;
+    width: 100%;
+    justify-content: center;
+    padding-bottom: 10px;
 }
 
-.goalCard:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
-}
-
-.goalName {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1a1a2e;
-}
-
-.goalTarget {
-    margin: 0;
-    font-size: 0.95rem;
+.goalsbills span {
+    font-size: 1.1rem;
     font-weight: 600;
-    color: #4a5568;
-}
-.noGoalsText {
-    text-align: center;
     color: #718096;
-    font-size: 1rem;
-    margin-top: 2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
 }
-@media (max-width: 768px) {
-    .container {
-        padding: 1.5rem 1rem;
-    }
 
-    .goalCard {
-        max-width: 100%;
+.goalsbills span:hover {
+    color: #4a90e2;
+}
+
+.noGoalsText {
+    color: #a0aec0;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+.goalCard,
+.billCard {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.goalCard:hover,
+.billCard:hover {
+    transform: scale(1.02);
+    border-color: #4a90e2;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.goalCard h3,
+.billCard h3 {
+    margin: 0 0 10px 0;
+    color: #2d3748;
+    font-size: 1.25rem;
+}
+
+.goalCard p {
+    margin: 5px 0;
+    color: #4a90e2;
+    font-weight: 700;
+}
+.billtext {
+    margin: 5px 0;
+    color: #2d3748;
+    font-weight: 700;
+}
+.money {
+    margin: 5px 0;
+    color: #df4e4e;
+    font-weight: 700;
+}
+
+@media (max-width: 600px) {
+    .buttonsWrapper {
+        flex-direction: column;
+        width: 100%;
+    }
+    .createGoalButton,
+    .createBillButton {
+        width: 100%;
     }
 }

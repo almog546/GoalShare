@@ -6,7 +6,10 @@ const {
     requireGroupMember,
     requireRole,
 } = require('../middlewares/requireAuthInGroupe');
-const { createBill } = require('../controllers/BillController');
+const {
+    createBill,
+    getBillsByGroupId,
+} = require('../controllers/BillController');
 
 router.post(
     '/create/:groupId',
@@ -14,5 +17,11 @@ router.post(
     requireGroupMember,
     requireRole,
     createBill,
+);
+router.get(
+    '/group/:groupId',
+    requireAuth,
+    requireGroupMember,
+    getBillsByGroupId,
 );
 module.exports = router;

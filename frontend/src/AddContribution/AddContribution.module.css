@@ -27,7 +27,7 @@
 }
 
 .container input {
-    width: 100%;
+    width: 92%;
     padding: 13px 15px;
     background-color: #f5f7fb;
     border: 1px solid #e2e8f0;
@@ -49,7 +49,7 @@
     box-shadow: 0 0 0 3px rgba(74, 127, 209, 0.15);
 }
 
-.createGroupButton {
+.contributionGroupButton {
     margin-top: 0.6rem;
     padding: 14px;
     background-color: #4a7fd1;
@@ -63,7 +63,7 @@
     box-shadow: 0 6px 16px rgba(74, 127, 209, 0.3);
 }
 
-.createGroupButton:hover {
+.contributionGroupButton:hover {
     background-color: #3f6fb8;
     box-shadow: 0 8px 20px rgba(74, 127, 209, 0.4);
 }

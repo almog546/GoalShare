@@ -7,8 +7,14 @@ export default function GroupPage() {
     const navigate = useNavigate();
     const [groupdetails, setGroupDetails] = useState(null);
     const [goals, setGoals] = useState([]);
-
+    const [bills, setbills] = useState([]);
+    const [activeTab, setActiveTab] = useState('goals');
     const { groupid } = useParams();
+    const BillFrequency = {
+        MONTHLY: 'Monthly ',
+        QUARTERLY: 'Quarterly',
+        YEARLY: 'Yearly',
+    };
 
     useEffect(() => {
         async function fetchGroupDetails() {
@@ -48,6 +54,33 @@ export default function GroupPage() {
         }
         fetchGoals();
     }, [groupid]);
+    useEffect(() => {
+        async function fetchGoals() {
+            try {
+                const res = await fetch(
+                    `${import.meta.env.VITE_API_URL}/api/Bill/group/${groupid}`,
+                    { method: 'GET', credentials: 'include' },
+                );
+                if (!res.ok) {
+                    console.error('Failed to fetch goals');
+                } else {
+                    const data = await res.json();
+                    setbills(data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch goals', error);
+            }
+        }
+        fetchGoals();
+    }, [groupid]);
+
+    function showGoals() {
+        setActiveTab('goals');
+    }
+
+    function showBills() {
+        setActiveTab('bills');
+    }
 
     return (
         <>
@@ -68,24 +101,58 @@ export default function GroupPage() {
                         Create Bill
                     </button>
                 </div>
-                {goals.length === 0 && (
-                    <p className={styles.noGoalsText}>No goals created yet.</p>
+                <div className={styles.goalsbills}>
+                    <span onClick={showGoals}>Goals</span>
+                    <span onClick={showBills}>Bills</span>
+                </div>
+
+                {activeTab === 'goals' && (
+                    <>
+                        {goals.length === 0 && (
+                            <p className={styles.noGoalsText}>
+                                No goals created yet.
+                            </p>
+                        )}
+
+                        {goals.map((goal) => (
+                            <div
+                                key={goal.id}
+                                className={styles.goalCard}
+                                onClick={() =>
+                                    navigate(
+                                        `/group/${groupid}/goal/${goal.id}`,
+                                    )
+                                }
+                            >
+                                <h3>{goal.name}</h3>
+                                <p>Target: ${goal.target}</p>
+                            </div>
+                        ))}
+                    </>
                 )}
 
-                {goals.map((goal) => (
-                    <div
-                        key={goal.id}
-                        className={styles.goalCard}
-                        onClick={() =>
-                            navigate(`/group/${groupid}/goal/${goal.id}`)
-                        }
-                    >
-                        <h3 className={styles.goalName}>{goal.name}</h3>
-                        <p className={styles.goalTarget}>
-                            Target: ${goal.target}
-                        </p>
-                    </div>
-                ))}
+                {activeTab === 'bills' && (
+                    <>
+                        {bills.length === 0 && (
+                            <p className={styles.noGoalsText}>
+                                No bills created yet.
+                            </p>
+                        )}
+
+                        {bills.map((bill) => (
+                            <div key={bill.id} className={styles.billCard}>
+                                <h3>{bill.name}</h3>
+                                <p className={styles.money}>${bill.amount}</p>
+                                <p className={styles.billtext}>
+                                    Frequency: {BillFrequency[bill.frequency]}
+                                </p>
+                                <p className={styles.billtext}>
+                                    Due day: {bill.dueDay}
+                                </p>
+                            </div>
+                        ))}
+                    </>
+                )}
             </div>
         </>
     );

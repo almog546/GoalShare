@@ -18,6 +18,22 @@ async function createBill(req, res) {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
+async function getBillsByGroupId(req, res) {
+    const groupId = req.params.groupId;
+    try {
+        const bills = await prisma.recurringBill.findMany({
+            where: {
+                groupId,
+            },
+        });
+        res.status(200).json(bills);
+    } catch (error) {
+        console.error('Error fetching goals:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
 module.exports = {
     createBill,
+    getBillsByGroupId,
 };
