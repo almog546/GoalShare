@@ -8,6 +8,8 @@ export default function GroupPage() {
     const [groupdetails, setGroupDetails] = useState(null);
     const [goals, setGoals] = useState([]);
     const [bills, setbills] = useState([]);
+    const [activityLogs, setActivityLogs] = useState([]);
+
     const [activeTab, setActiveTab] = useState('goals');
     const { groupid } = useParams();
     const BillFrequency = {
@@ -15,6 +17,25 @@ export default function GroupPage() {
         QUARTERLY: 'Quarterly',
         YEARLY: 'Yearly',
     };
+    useEffect(() => {
+        async function fetchActivityLogs() {
+            try {
+                const res = await fetch(
+                    `${import.meta.env.VITE_API_URL}/api/ActivityLog/group/${groupid}`,
+                    { method: 'GET', credentials: 'include' },
+                );
+                if (!res.ok) {
+                    console.error('Failed to fetch activity logs');
+                } else {
+                    const data = await res.json();
+                    setActivityLogs(data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch activity logs', error);
+            }
+        }
+        fetchActivityLogs();
+    }, [groupid]);
 
     useEffect(() => {
         async function fetchGroupDetails() {
@@ -55,7 +76,7 @@ export default function GroupPage() {
         fetchGoals();
     }, [groupid]);
     useEffect(() => {
-        async function fetchGoals() {
+        async function fetchBills() {
             try {
                 const res = await fetch(
                     `${import.meta.env.VITE_API_URL}/api/Bill/group/${groupid}`,
@@ -71,7 +92,7 @@ export default function GroupPage() {
                 console.error('Failed to fetch goals', error);
             }
         }
-        fetchGoals();
+        fetchBills();
     }, [groupid]);
 
     function showGoals() {
@@ -80,6 +101,9 @@ export default function GroupPage() {
 
     function showBills() {
         setActiveTab('bills');
+    }
+    function showActivityLog() {
+        setActiveTab('ActivityLog');
     }
 
     return (
@@ -104,8 +128,8 @@ export default function GroupPage() {
                 <div className={styles.goalsbills}>
                     <span onClick={showGoals}>Goals</span>
                     <span onClick={showBills}>Bills</span>
+                    <span onClick={showActivityLog}>Activity Log</span>
                 </div>
-
                 {activeTab === 'goals' && (
                     <>
                         {goals.length === 0 && (
@@ -130,7 +154,6 @@ export default function GroupPage() {
                         ))}
                     </>
                 )}
-
                 {activeTab === 'bills' && (
                     <>
                         {bills.length === 0 && (
@@ -148,6 +171,38 @@ export default function GroupPage() {
                                 </p>
                                 <p className={styles.billtext}>
                                     Due day: {bill.dueDay}
+                                </p>
+                                <button
+                                    onClick={() =>
+                                        navigate(
+                                            `/group/${groupid}/bill/${bill.id}`,
+                                        )
+                                    }
+                                    className={styles.payBillButton}
+                                >
+                                    View / Pay Bill
+                                </button>
+                            </div>
+                        ))}
+                    </>
+                )}
+                {activeTab === 'ActivityLog' && (
+                    <>
+                        {activityLogs.length === 0 && (
+                            <p className={styles.noGoalsText}>
+                                No activity logs available.
+                            </p>
+                        )}
+                        {activityLogs.map((log) => (
+                            <div
+                                key={log.id}
+                                className={styles.activityLogCard}
+                            >
+                                <p className={styles.activityLogText}>
+                                    {log.message}
+                                </p>
+                                <p className={styles.activityLogTimestamp}>
+                                    {new Date(log.createdAt).toDateString()}
                                 </p>
                             </div>
                         ))}

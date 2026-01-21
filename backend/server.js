@@ -29,6 +29,8 @@ app.use('/api/Group', require('./routes/groupRoutes'));
 app.use('/api/Goal', require('./routes/goalRoutes'));
 app.use('/api/Contribution', require('./routes/ContributionRoutes'));
 app.use('/api/Bill', require('./routes/billRoutes'));
+app.use('/api/Paymentbill', require('./routes/PaymentbillRoutes'));
+app.use('/api/ActivityLog', require('./routes/ActivityLogRoutes'));
 
 app.use((err, req, res, next) => {
     console.error('Error:', err.message);

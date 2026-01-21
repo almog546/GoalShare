@@ -16,6 +16,17 @@ async function createGroup(req, res) {
                 },
             },
         });
+        const username = await prisma.user.findUnique({
+            where: { id: req.session.userId },
+            select: { name: true },
+        });
+        await prisma.activityLog.create({
+            data: {
+                type: 'GROUP_CREATED',
+                groupId: newGroup.id,
+                message: `Group ${name} created by ${username.name}.`,
+            },
+        });
         res.status(201).json(newGroup);
     } catch (error) {
         console.error('Error creating group:', error);

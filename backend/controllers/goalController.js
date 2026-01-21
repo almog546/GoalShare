@@ -21,6 +21,17 @@ async function createGoal(req, res) {
                 },
             },
         });
+        const username = await prisma.user.findUnique({
+            where: { id: req.session.userId },
+            select: { name: true },
+        });
+        await prisma.activityLog.create({
+            data: {
+                type: 'GOAL_CREATED',
+                groupId: req.params.groupId,
+                message: `Goal ${name} created by ${username.name}.`,
+            },
+        });
         res.status(201).json(newGoal);
     } catch (error) {
         console.error('Error creating goal:', error);

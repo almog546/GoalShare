@@ -9,6 +9,8 @@ const {
 const {
     createBill,
     getBillsByGroupId,
+    getbillById,
+    createPayment,
 } = require('../controllers/BillController');
 
 router.post(
@@ -23,5 +25,18 @@ router.get(
     requireAuth,
     requireGroupMember,
     getBillsByGroupId,
+);
+router.get(
+    '/group/:groupId/bill/:billId',
+    requireAuth,
+    requireGroupMember,
+    getbillById,
+);
+router.post(
+    '/create/:groupId/bill/:billId',
+    requireAuth,
+    requireGroupMember,
+    requireRole,
+    createPayment,
 );
 module.exports = router;

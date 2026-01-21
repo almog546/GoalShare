@@ -13,6 +13,8 @@ import CreateGoal from './CreateGoal/CreateGoal.jsx';
 import GoalPage from './GoalPage/GoalPage.jsx';
 import AddContribution from './AddContribution/AddContribution.jsx';
 import CreateBill from './CreateBill/CreateBill.jsx';
+import Billpage from './Billpage/Billpage.jsx';
+
 function App() {
     const nabvigate = useNavigate();
     const [user, setUser] = useState(null);
@@ -92,6 +94,10 @@ function App() {
                 <Route
                     path="/group/:groupId/CreateBill/"
                     element={<CreateBill />}
+                />
+                <Route
+                    path="/group/:groupId/bill/:billId"
+                    element={<Billpage />}
                 />
             </Routes>
         </>
