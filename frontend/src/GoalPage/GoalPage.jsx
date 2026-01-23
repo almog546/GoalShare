@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function GoalPage({ showTemporaryText }) {
     const { groupId } = useParams();
     const { goalId } = useParams();
-    const { ContributionId } = useParams();
+   
     const [goals, setGoals] = useState('');
     const navigate = useNavigate();
 

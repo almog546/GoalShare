@@ -13,7 +13,7 @@ export default function GroupPage({ showTemporaryText }) {
     const [inviteLink, setInviteLink] = useState('');
     const [loadingInvite, setLoadingInvite] = useState(false);
     const [inviteDetails, setInviteDetails] = useState(null);
-    const [joingroup, setJoingroup] = useState(null);
+    
     
 
     const {token} = useParams();
@@ -182,12 +182,33 @@ export default function GroupPage({ showTemporaryText }) {
     function InviteMembers() {
         setActiveTab('Invite Members');
     }
+    async function deleteGroup() {
+        try {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/Group/${groupid}`,
+                {
+                    method: 'DELETE',
+                    credentials: 'include',
+                },
+            );
+            const data = await res.json();
+            if (!res.ok) {
+                console.error(data.message);
+                return;
+            }
+            navigate(`/`);
+             showTemporaryText('Group deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting group:', error);
+        }
+    }
     
 
     return (
         <>
             <div className={styles.container}>
                 <div className={styles.buttonsWrapper}>
+                    <button onClick={deleteGroup} className={styles.deleteGroupButton}>Delete Group</button>
                     <button
                         className={styles.createGoalButton}
                         onClick={() =>

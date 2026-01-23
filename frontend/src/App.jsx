@@ -20,6 +20,7 @@ import InvitePage from './InvitePage/InvitePage.jsx';
 function App() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [logout, setLogout] = useState(false);
      const [showText, setShowText] = useState('');
     
@@ -63,6 +64,8 @@ function App() {
                 }
             } catch (error) {
                 setUser(null);
+            } finally {
+                setLoading(false);
             }
         }
         fetchUser();
@@ -76,6 +79,10 @@ function App() {
           }
    
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <>
         {showText && <div className="globalToast">{showText}</div>}
@@ -86,7 +93,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route
                     path="/create-group"
-                    element={!user?( <Navigate to="/signup" replace />) : <CreateGroup  showTemporaryText={showTemporaryText}  />}
+                    element={!user?( <Navigate to="/signup" replace />) : <CreateGroup  showTemporaryText={showTemporaryText} user={user}  />}
                 />
                 <Route
                     path="/group-dashboard"

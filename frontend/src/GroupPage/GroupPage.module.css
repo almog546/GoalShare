@@ -258,18 +258,19 @@ body {
         align-items: flex-start;
         gap: 12px;
     }
+    
 }
 
-/* --- Invite Section Container --- */
+
 .inviteSection {
     background-color: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 16px;
     padding: 32px;
     max-width: 500px;
-    margin: 20px auto; /* מרכוז הכרטיס */
+    margin: 20px auto; 
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* צל רך ויוקרתי */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); 
     animation: fadeIn 0.4s ease-out;
 }
 
@@ -281,7 +282,7 @@ body {
     font-weight: 700;
 }
 
-/* --- כפתור יצירת הלינק --- */
+
 .generateButton {
     background: linear-gradient(135deg, #4a90e2 0%, #3182ce 100%);
     color: white;
@@ -313,7 +314,7 @@ body {
     transform: scale(0.98);
 }
 
-/* --- הקונטיינר של הלינק וההעתקה --- */
+
 .linkContainer {
     display: flex;
     gap: 12px;
@@ -326,10 +327,7 @@ body {
     animation: slideDown 0.3s ease-out;
 }
 
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+
 
 
 .linkInput {
@@ -382,3 +380,38 @@ body {
         width: 93.5%;
     }
 }
+.deleteGroupButton {
+    position: relative;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    letter-spacing: 0.3px;
+    flex: 1;
+    max-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e53e3e;
+    color: white;
+    box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+   
+}
+
+.deleteGroupButton:hover {
+    background-color: #c53030;
+    box-shadow: 0 6px 20px rgba(197, 48, 48, 0.4);
+}
+@media (max-width: 600px) {
+    .deleteGroupButton {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+        max-width: 100%;
+        width: 100%;
+        align-self: center;
+    }
+}
+

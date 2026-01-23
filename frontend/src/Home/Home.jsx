@@ -1,8 +1,9 @@
 import styles from './Home.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 export default function Home({ user }) {
+    const navigate = useNavigate();
     const [groups, setGroups] = useState([]);
 
     const GroupType = {
@@ -45,7 +46,7 @@ export default function Home({ user }) {
                     </h1>
                     <button
                         className={styles.createGroupButton}
-                        onClick={() => (window.location.href = '/create-group')}
+                        onClick={() => navigate('/create-group')}
                     >
                         Create a Group
                     </button>
