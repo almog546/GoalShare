@@ -44,6 +44,7 @@ body {
     color: #555;
     font-size: 1.1rem;
     margin: 0.4rem 0 0.5rem;
+    
 }
 
 .createGroupButton {
@@ -87,11 +88,34 @@ body {
     color: #1e293b;
 }
 
-.loginLink,
+.loginLink{
+    color: #4a90e2;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid #357abd;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+  
+}
 .signupLink {
     color: #4a90e2;
     font-weight: 600;
     text-decoration: none;
+   margin-left: 1rem;
+    border: 1px solid #357abd;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+}
+.loginLink:hover,
+.signupLink:hover {
+    background-color: #357abd;
+    color: white;
+}
+.authLinks {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #555;
 }
 .viewGroupLink {
     display: inline-block;

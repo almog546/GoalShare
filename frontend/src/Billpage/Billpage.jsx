@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-export default function Billpage() {
+export default function Billpage({ showTemporaryText }) {
     const [amount, setamount] = useState('');
     const [date, setdate] = useState('');
     const [error, setError] = useState(null);
@@ -44,6 +44,7 @@ export default function Billpage() {
 
                 const data = await res.json();
                 setbillspaid(data);
+                
             } catch (err) {
                 console.error(err);
             }
@@ -76,6 +77,7 @@ export default function Billpage() {
                 return;
             }
             navigate(`/group/${groupId}`);
+            showTemporaryText('Payment added successfully!');
         } catch (err) {
             setError(err.message);
         }

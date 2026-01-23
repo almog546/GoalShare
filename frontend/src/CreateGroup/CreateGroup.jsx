@@ -2,13 +2,14 @@ import styles from './CreateGroup.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function CreateGroup() {
+export default function CreateGroup({ showTemporaryText }) {
     const navigate = useNavigate();
 
     const [groupName, setGroupName] = useState('');
     const [groupType, setGroupType] = useState('COUPLE');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+   
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -37,14 +38,18 @@ export default function CreateGroup() {
             }
 
             navigate(`/`);
+            showTemporaryText('Group created successfully!');
         } catch (err) {
             setError(err.message);
         } finally {
             setLoading(false);
         }
     }
+    
 
     return (
+    <>
+    
         <form className={styles.container} onSubmit={handleSubmit}>
             <h1>Create a Group</h1>
 
@@ -73,5 +78,6 @@ export default function CreateGroup() {
             {loading && <p className={styles.loading}>Creating group...</p>}
             {error && <p className={styles.error}>{error}</p>}
         </form>
-    );
+    </>
+);
 }

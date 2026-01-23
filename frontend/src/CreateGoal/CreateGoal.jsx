@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export default function CreateGoal() {
+export default function CreateGoal({ showTemporaryText }) {
     const [name, setName] = useState('');
     const [target, setTarget] = useState('');
     const [deadline, setDeadline] = useState('');
@@ -35,6 +35,7 @@ export default function CreateGoal() {
                 const newGoal = await res.json();
                 setGoals((prevGoals) => [...prevGoals, newGoal]);
                 navigate(`/group/${groupid}`);
+                showTemporaryText('Goal created successfully!');
             } else {
                 console.error('Failed to create goal');
             }

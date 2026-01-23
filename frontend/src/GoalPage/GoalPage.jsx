@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import ProgressBar from '../ProgressBar/ProgressBar.jsx';
 import { useNavigate } from 'react-router-dom';
 
-export default function GoalPage() {
+export default function GoalPage({ showTemporaryText }) {
     const { groupId } = useParams();
     const { goalId } = useParams();
     const { ContributionId } = useParams();
@@ -47,6 +47,7 @@ export default function GoalPage() {
             }
             setGoals(null);
             navigate(`/group/${groupId}`);
+             showTemporaryText('Goal deleted successfully!');
         } catch (error) {
             console.error('Error deleting job:', error);
         }

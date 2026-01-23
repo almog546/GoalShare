@@ -74,6 +74,45 @@
     font-size: 14px;
     text-align: center;
 }
+.success {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background-color: #16a34a; /* ירוק הצלחה */
+  color: #ffffff;
+
+  padding: 12px 20px;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+
+  animation: slideFade 2s ease forwards;
+}
+
+@keyframes slideFade {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+}
+
 
 @media (max-width: 400px) {
     .container {

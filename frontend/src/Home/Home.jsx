@@ -34,6 +34,7 @@ export default function Home({ user }) {
         }
         fetchGroups();
     }, []);
+    
 
     return (
         <>
@@ -78,15 +79,19 @@ export default function Home({ user }) {
                 <div className={styles.container}>
                     <h1 className={styles.title}>Welcome to GoalShare!</h1>
                     <p className={styles.subtitle}>
-                        Please log in or sign up to start sharing your goals.
+                        Please log in or sign up to start sharing your goals. 
+                         </p>
+                         <div className={styles.authLinks}>
+
                         <Link to="/login" className={styles.loginLink}>
-                            Login
+                             Login
                         </Link>{' '}
-                        or
+                        
                         <Link to="/signup" className={styles.signupLink}>
                             Signup
                         </Link>
-                    </p>
+                        </div>
+                   
                 </div>
             )}
         </>

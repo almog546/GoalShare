@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { use } from 'react';
 
-export default function GroupPage() {
+export default function GroupPage({ showTemporaryText }) {
     const navigate = useNavigate();
     const [groupdetails, setGroupDetails] = useState(null);
     const [goals, setGoals] = useState([]);
@@ -14,6 +14,8 @@ export default function GroupPage() {
     const [loadingInvite, setLoadingInvite] = useState(false);
     const [inviteDetails, setInviteDetails] = useState(null);
     const [joingroup, setJoingroup] = useState(null);
+    
+
     const {token} = useParams();
 
     const [activeTab, setActiveTab] = useState('goals');
@@ -154,6 +156,7 @@ export default function GroupPage() {
                 const data = await res.json();
                 const fullUrl = `${window.location.origin}${data.inviteUrl}`;
                 setInviteLink(fullUrl);
+                showTemporaryText('Invite link created successfully!');
             }
         } catch (error) {
             console.error('Failed to create invite link', error);
@@ -162,9 +165,8 @@ export default function GroupPage() {
         }
     }
 
-    function copyInviteLink() {
-        navigator.clipboard.writeText(inviteLink);
-        alert('Invite link copied!');
+    function copyInviteLink() {   
+        showTemporaryText('Invite link copied!');
     }
 
     function showGoals() {
@@ -180,6 +182,7 @@ export default function GroupPage() {
     function InviteMembers() {
         setActiveTab('Invite Members');
     }
+    
 
     return (
         <>

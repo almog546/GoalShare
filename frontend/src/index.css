@@ -1,0 +1,30 @@
+.globalToast {
+    position: fixed;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999; 
+    background-color: rgba(26, 32, 44, 0.95); 
+    color: #ffffff;
+    padding: 12px 32px;
+    border-radius: 50px; 
+    backdrop-filter: blur(8px); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+
+.globalToast::before {
+    content: '✓';
+    display: inline-block;
+    margin-right: 10px;
+    color: #48bb78; 
+    font-weight: 800;
+    font-size: 16px;
+}
+

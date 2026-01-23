@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export default function CreateBill() {
+export default function CreateBill({ showTemporaryText }) {
     const [name, setName] = useState('');
     const [amount, setamount] = useState('');
     const [frequency, setfrequency] = useState('MONTHLY');
@@ -41,6 +41,7 @@ export default function CreateBill() {
             }
 
             navigate(`/group/${groupId}`);
+            showTemporaryText('Bill created successfully!');
         } catch (err) {
             setError(err.message);
         } finally {

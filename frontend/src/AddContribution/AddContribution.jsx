@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export default function AddContribution() {
+export default function AddContribution({ showTemporaryText }) {
     const [amount, setamount] = useState('');
     const [date, setdate] = useState('');
     const [note, setnote] = useState('');
@@ -37,6 +37,7 @@ export default function AddContribution() {
                 return;
             }
             navigate(`/group/${groupId}/goal/${goalId}`);
+             showTemporaryText('Contribution added successfully!');
         } catch (err) {
             setError(err.message);
         }

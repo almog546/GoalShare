@@ -3,7 +3,7 @@ import Login from './Login/Login';
 import Signup from './Signup/Signup';
 import Home from './Home/Home.jsx';
 
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Navbar from './Navbar/Navbar.jsx';
 import { useNavigate } from 'react-router-dom';
 import CreateGroup from './CreateGroup/CreateGroup.jsx';
@@ -16,10 +16,14 @@ import CreateBill from './CreateBill/CreateBill.jsx';
 import Billpage from './Billpage/Billpage.jsx';
 import InvitePage from './InvitePage/InvitePage.jsx';
 
+
 function App() {
-    const nabvigate = useNavigate();
+    const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [logout, setLogout] = useState(false);
+     const [showText, setShowText] = useState('');
+    
+    
 
     const location = useLocation();
 
@@ -35,7 +39,7 @@ function App() {
             if (res.ok) {
                 setUser(null);
                 setLogout(true);
-                nabvigate('/login');
+                navigate('/login');
             }
         } catch (error) {
             console.error('Logout failed', error);
@@ -63,46 +67,55 @@ function App() {
         }
         fetchUser();
     }, [location]);
+     function showTemporaryText(text) {
+            setShowText(text);
+        
+            setTimeout(() => {
+              setShowText('');
+            }, 2000);
+          }
+   
 
     return (
         <>
+        {showText && <div className="globalToast">{showText}</div>}
             {user && <Navbar user={user} onLogout={onLogout} />}
             <Routes>
-                <Route path="/" element={<Home user={user} />} />
+                <Route path="/" element={<Home user={user}  />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route
                     path="/create-group"
-                    element={<CreateGroup user={user} />}
+                    element={!user?( <Navigate to="/signup" replace />) : <CreateGroup  showTemporaryText={showTemporaryText}  />}
                 />
                 <Route
                     path="/group-dashboard"
-                    element={<GroupDashboard user={user} />}
+                    element={!user?( <Navigate to="/signup" replace />) : <GroupDashboard user={user} showTemporaryText={showTemporaryText}  />}
                 />
-                <Route path="/group/:groupid" element={<GroupPage />} />
+                <Route path="/group/:groupid" element={!user?( <Navigate to="/signup" replace />) : <GroupPage showTemporaryText={showTemporaryText}  />} />
                 <Route
                     path="/group/:groupid/create-goal"
-                    element={<CreateGoal />}
+                    element={!user?( <Navigate to="/signup" replace />) : <CreateGoal showTemporaryText={showTemporaryText}  />}
                 />
                 <Route
                     path="/group/:groupId/goal/:goalId"
-                    element={<GoalPage />}
+                    element={!user?( <Navigate to="/signup" replace />) : <GoalPage showTemporaryText={showTemporaryText}  />}
                 />
                 <Route
                     path="/group/:groupId/goal/:goalId/AddContribution/"
-                    element={<AddContribution />}
+                    element={!user?( <Navigate to="/signup" replace />) : <AddContribution showTemporaryText={showTemporaryText}  />}
                 />
                 <Route
                     path="/group/:groupId/CreateBill/"
-                    element={<CreateBill />}
+                    element={!user?( <Navigate to="/signup" replace />) : <CreateBill showTemporaryText={showTemporaryText}  />}
                 />
                 <Route
                     path="/group/:groupId/bill/:billId"
-                    element={<Billpage />}
+                    element={!user?( <Navigate to="/signup" replace />) : <Billpage showTemporaryText={showTemporaryText}  />}
                 />
                 <Route
                     path="/invite/:token"
-                    element={<InvitePage />}
+                    element={<InvitePage showTemporaryText={showTemporaryText}  />}
                 />
             </Routes>
         </>
