@@ -31,6 +31,9 @@ app.use('/api/Contribution', require('./routes/ContributionRoutes'));
 app.use('/api/Bill', require('./routes/billRoutes'));
 app.use('/api/Paymentbill', require('./routes/PaymentbillRoutes'));
 app.use('/api/ActivityLog', require('./routes/ActivityLogRoutes'));
+app.use('/api/InviteLink', require('./routes/InviteLink'));
+
+
 
 app.use((err, req, res, next) => {
     console.error('Error:', err.message);

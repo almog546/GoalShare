@@ -14,6 +14,7 @@ import GoalPage from './GoalPage/GoalPage.jsx';
 import AddContribution from './AddContribution/AddContribution.jsx';
 import CreateBill from './CreateBill/CreateBill.jsx';
 import Billpage from './Billpage/Billpage.jsx';
+import InvitePage from './InvitePage/InvitePage.jsx';
 
 function App() {
     const nabvigate = useNavigate();
@@ -98,6 +99,10 @@ function App() {
                 <Route
                     path="/group/:groupId/bill/:billId"
                     element={<Billpage />}
+                />
+                <Route
+                    path="/invite/:token"
+                    element={<InvitePage />}
                 />
             </Routes>
         </>

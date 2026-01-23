@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './GroupPage.module.css';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { use } from 'react';
 
 export default function GroupPage() {
     const navigate = useNavigate();
@@ -9,6 +10,11 @@ export default function GroupPage() {
     const [goals, setGoals] = useState([]);
     const [bills, setbills] = useState([]);
     const [activityLogs, setActivityLogs] = useState([]);
+    const [inviteLink, setInviteLink] = useState('');
+    const [loadingInvite, setLoadingInvite] = useState(false);
+    const [inviteDetails, setInviteDetails] = useState(null);
+    const [joingroup, setJoingroup] = useState(null);
+    const {token} = useParams();
 
     const [activeTab, setActiveTab] = useState('goals');
     const { groupid } = useParams();
@@ -94,6 +100,72 @@ export default function GroupPage() {
         }
         fetchBills();
     }, [groupid]);
+    useEffect(() => {
+        async function fetchInviteLink() {
+            try {
+                const res = await fetch(
+                    `${import.meta.env.VITE_API_URL}/api/InviteLink/${token}`,
+                    { method: 'GET', credentials: 'include' },
+                );
+                if (!res.ok) {
+                    console.error('Failed to fetch invite link details');
+                } else {
+                    const data = await res.json();
+                    setInviteDetails(data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch invite link details', error);
+            }
+        }
+        fetchInviteLink();
+    }, [token]);
+    async function jointhegroup(){
+        try {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/InviteLink/${token}/consume`,
+                { method: 'POST', credentials: 'include' },
+            );
+            if (!res.ok) {
+                console.error('Failed to join group');
+            } else {
+                const data = await res.json();
+                navigate(`/group/${groupId}`);
+            }
+        } catch (error) {
+            console.error('Failed to join group', error);
+        }
+    }
+
+    async function createInviteLink() {
+        setLoadingInvite(true);
+        try {
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/InviteLink/${groupid}/create`,
+                { 
+                    method: 'POST', 
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ role: 'CONTRIBUTOR' })
+                },
+            );
+            if (!res.ok) {
+                console.error('Failed to create invite link');
+            } else {
+                const data = await res.json();
+                const fullUrl = `${window.location.origin}${data.inviteUrl}`;
+                setInviteLink(fullUrl);
+            }
+        } catch (error) {
+            console.error('Failed to create invite link', error);
+        } finally {
+            setLoadingInvite(false);
+        }
+    }
+
+    function copyInviteLink() {
+        navigator.clipboard.writeText(inviteLink);
+        alert('Invite link copied!');
+    }
 
     function showGoals() {
         setActiveTab('goals');
@@ -104,6 +176,9 @@ export default function GroupPage() {
     }
     function showActivityLog() {
         setActiveTab('ActivityLog');
+    }
+    function InviteMembers() {
+        setActiveTab('Invite Members');
     }
 
     return (
@@ -129,6 +204,7 @@ export default function GroupPage() {
                     <span onClick={showGoals}>Goals</span>
                     <span onClick={showBills}>Bills</span>
                     <span onClick={showActivityLog}>Activity Log</span>
+                    <span onClick={InviteMembers}>Invite Members</span>
                 </div>
                 {activeTab === 'goals' && (
                     <>
@@ -207,6 +283,45 @@ export default function GroupPage() {
                             </div>
                         ))}
                     </>
+                )}
+                {activeTab === 'Invite Members' && (
+                    <div className={styles.inviteSection}>
+                        <h3>Invite Members to Group</h3>
+                        <button 
+                            onClick={createInviteLink} 
+                            disabled={loadingInvite}
+                            className={styles.generateButton}
+                        >
+                            {loadingInvite ? 'Generating...' : 'Generate Invite Link'}
+                        </button>
+                        
+                        {inviteLink && (
+                            <div className={styles.linkContainer}>
+                                <input 
+                                    type="text" 
+                                    value={inviteLink} 
+                                    readOnly 
+                                    className={styles.linkInput}
+                                />
+                                <button 
+                                    onClick={copyInviteLink}
+                                    className={styles.copyButton}
+                                >
+                                    Copy Link
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                )}
+                {inviteDetails && (
+                    <div className={styles.inviteDetails}>
+                        <h3>Invite Link Details</h3>
+                        <p>Group ID: {inviteDetails.groupId}</p>
+                        <p>Role: {inviteDetails.role}</p>
+                        <button onClick={jointhegroup} className={styles.joinButton}>
+                            Join Group
+                        </button>
+                    </div>
                 )}
             </div>
         </>
